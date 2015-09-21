@@ -16,8 +16,18 @@ public class PlayerController : MonoBehaviour {
 	public float speed = 5.0f;
 
 	public float tilt = 4.0f;
+
+	public float fireRate = 0.5f;
+
+	public GameObject shot;
+
+	public Transform shotSpawn;
+
 #endregion
 
+#region private field
+	private float nextFire = 0.0f;
+#endregion
 	void Start(){
 		rigidBody = GetComponent<Rigidbody>();
 
@@ -42,5 +52,13 @@ public class PlayerController : MonoBehaviour {
 		    0.0f,
 			rigidBody.velocity.x*(-tilt)
 			);
+	}
+
+	void Update ()
+	{
+		if (Input.GetButton ("Fire1") && Time.time > nextFire) {
+			nextFire = Time.time + fireRate;
+			Instantiate (shot, shotSpawn.position, shotSpawn.rotation);
+		}
 	}
 }
