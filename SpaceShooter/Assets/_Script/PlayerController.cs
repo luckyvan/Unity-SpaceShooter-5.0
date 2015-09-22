@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour {
 
 	Rigidbody rigidBody;
 
+	AudioSource audio;
 #region public field
 	[System.Serializable]
 	public class Boundary{
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour {
 
 	public Transform shotSpawn;
 
+
 #endregion
 
 #region private field
@@ -30,9 +32,15 @@ public class PlayerController : MonoBehaviour {
 #endregion
 	void Start(){
 		rigidBody = GetComponent<Rigidbody>();
+		audio = GetComponent<AudioSource>();
 
 		if (rigidBody == null) {
 			throw new UnityException("No RigidBody Added to Player");
+		}
+
+		
+		if (audio == null) {
+			throw new UnityException("No Audio Source Added to Player");
 		}
 	}
 
@@ -59,6 +67,8 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetButton ("Fire1") && Time.time > nextFire) {
 			nextFire = Time.time + fireRate;
 			Instantiate (shot, shotSpawn.position, shotSpawn.rotation);
+
+			audio.Play ();
 		}
 	}
 }
