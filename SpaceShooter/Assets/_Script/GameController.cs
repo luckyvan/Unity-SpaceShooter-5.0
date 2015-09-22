@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 #region public field
@@ -14,12 +15,16 @@ public class GameController : MonoBehaviour {
 	public float startWait = 2f;
 
 	public float waveWait = 2f;
+
+	public Text scoreText;
 #endregion
 
 #region private field
 	private Quaternion spawnRotation;
 	
 	public Vector3 spawnPosition = Vector3.zero;
+
+	private int score;
 #endregion
 
 	IEnumerator spawnWaves(){
@@ -39,7 +44,21 @@ public class GameController : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
+		score = 0;
+
+		UpdateScore ();
+
 		StartCoroutine(spawnWaves ());
 	}
 
+	void UpdateScore (){
+		scoreText.text = "得分：" + score;
+	}
+
+
+	public void AddScore (int scoreValue)
+	{
+		score += scoreValue;
+		UpdateScore ();
+	}
 }
